@@ -42,8 +42,8 @@ node {
 
     perform_build_dockerfile         : true,
     image_name                       : "spring-boot-realworld",
-    dockerfile_location              : "Dockerfile",
-    dockerfile_context               : ".",
+    dockerfile_location              : "/Dockerfile",
+    dockerfile_context               : " ",
 
     image_scanning_check             : false,
     image_size_validator_check       : false,
