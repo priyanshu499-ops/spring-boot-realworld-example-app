@@ -11,13 +11,14 @@ def REPO_URL = 'https://github.com/priyanshu499-ops/spring-boot-realworld-exampl
 node {
 
     stage('Checkout') {
-        checkout([
-            $class: 'GitSCM',
-            branches: [[name: '*/master']],
-            userRemoteConfigs: [[url: REPO_URL]]
-        ])
-        sh "ls -la ${WORKSPACE}/spring-boot-realworld-example-app || echo 'direct workspace'"
-        sh "ls -la ${WORKSPACE}"
+        dir('spring-boot-realworld-example-app') {
+            checkout([
+                $class: 'GitSCM',
+                branches: [[name: '*/master']],
+                userRemoteConfigs: [[url: REPO_URL]]
+            ])
+        }
+        sh "ls -la ${WORKSPACE}/spring-boot-realworld-example-app"
     }
 
     stage('Build Artifact') {
