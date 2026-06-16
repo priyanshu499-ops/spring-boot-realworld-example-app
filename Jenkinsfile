@@ -1,92 +1,73 @@
 @Library('ci-jenkins-shared-libraries@main') _
-
-def buildArtifact = new opstree.java.build_artifact()
-def depScanning   = new opstree.common.dependency_scanning()
-def vulnScanning  = new opstree.common.vulnerability_scanning()
-def sizeValidator = new opstree.common.image_size_validator()
-def unitTest      = new opstree.java.junit()
-
-def REPO_URL = 'https://github.com/priyanshu499-ops/spring-boot-realworld-example-app.git'
+def cipipeline = new opstree.ci.templates.java_ci.java_ci()
 
 node {
+  cipipeline.call([
 
-    stage('Checkout') {
-        dir('spring-boot-realworld-example-app') {
-            checkout([
-                $class: 'GitSCM',
-                branches: [[name: '*/master']],
-                userRemoteConfigs: [[url: REPO_URL]]
-            ])
-        }
-        sh "ls -la ${WORKSPACE}/spring-boot-realworld-example-app"
-    }
+    // WORKSPACE MANAGEMENT
+    clean_workspace                  : true,
+    ignore_clean_workspace_failure   : false,
+    delete_dirs                      : false,
+    clean_when_build_aborted         : true,
+    clean_when_build_failed          : true,
+    clean_when_not_built             : true,
+    clean_when_build_succeed         : true,
+    clean_when_build_unstable        : true,
 
-    stage('Build Artifact') {
-        buildArtifact.build_factory([
-            perform_code_build         : 'true',
-            build_tool                 : 'gradle',
-            repo_url                   : REPO_URL,
-            source_code_path           : '.',
-            gradle_command             : 'build',
-            gradle_build_file_location : '.',
-            java_version               : '11',
-            codeartifact_dependency    : 'false',
-            codeartifact_domain        : '',
-            codeartifact_owner         : '',
-            pom_location               : ''
-        ])
-    }
+    // VCS MANAGEMENT
+    repo_https_url                   : "https://github.com/priyanshu499-ops/spring-boot-realworld-example-app.git",
+    repo_ssh_url                     : "https://github.com/priyanshu499-ops/spring-boot-realworld-example-app.git",
+    repo_branch                      : "master",
+    repo_url_type                    : "http",
+    jenkins_git_creds_id             : "github-token",
+    source_code_path                 : "/spring-boot-realworld-example-app",
 
-    stage('Unit Test') {
-        unitTest.unit_testing_factory([
-            unit_testing_check              : true,
-            fail_job_if_unit_issue_detected : false,
-            build_tool                      : 'gradle',
-            repo_url                        : REPO_URL,
-            source_code_path                : '.'
-        ])
-    }
+    // DEPENDENCY SCANNING
+    dependency_check                          : true,
+    dependency_scan_tool                      : "owasp",
+    owasp_project_name                        : "spring-boot-gradle",
+    owasp_report_publish                      : true,
+    owasp_report_format                       : "html",
+    fail_job_if_dependency_returned_exception : false,
 
-    stage('Dependency Scanning') {
-        depScanning.dependency_scanning_factory([
-            dependency_check                          : true,
-            dependency_scan_tool                      : 'owasp',
-            owasp_project_name                        : 'spring-boot-gradle',
-            owasp_report_publish                      : true,
-            owasp_report_format                       : 'html',
-            fail_job_if_dependency_returned_exception : false,
-            repo_url                                  : REPO_URL
-        ])
-    }
+    // CREDS SCANNING (GITLEAKS)
+    gitleaks_check                   : true,
+    fail_job_if_leak_detected        : false,
+    gitleaks_report_format           : "json",
+    gitleaks_report_jenkins_publish  : true,
 
-    stage('Gitleaks Scan') {
-        depScanning.creds_scanning_factory([
-            gitleaks_check                  : true,
-            fail_job_if_leak_detected       : false,
-            gitleaks_report_format          : 'json',
-            gitleaks_report_jenkins_publish : true,
-            repo_url                        : REPO_URL
-        ])
-    }
+    // BUILD ARTIFACT
+    perform_code_build               : true,
+    build_tool                       : "gradle",
+    gradle_command                   : "build",
+    gradle_build_file_location       : ".",
+    java_version                     : "11",
+    codeartifact_dependency          : false,
+    codeartifact_domain              : "",
+    codeartifact_owner               : "",
+    pom_location                     : "",
 
-    stage('Trivy Scan') {
-        vulnScanning.creds_scanning_factory([
-            trivy_check                      : true,
-            fail_job_if_trivy_issue_detected : false,
-            image_name                       : 'spring-boot-gradle',
-            image_tag                        : 'latest',
-            repo_url                         : REPO_URL
-        ])
-    }
+    // UNIT TESTING
+    unit_testing_check               : true,
+    fail_job_if_unit_issue_detected  : false,
+    unit_test_reports_path           : "**/build/test-results/test/*.xml",
 
-    stage('Image Size Validator') {
-        sizeValidator.size_validator_factory([
-            image_size_validator_check  : true,
-            max_allowed_image_size      : 500,
-            fail_job_if_validation_fail : false,
-            image_name                  : 'spring-boot-gradle',
-            image_tag                   : 'latest',
-            repo_url                    : REPO_URL
-        ])
-    }
+    // STATIC CODE ANALYSIS (disable karo agar sonar nahi hai)
+    static_code_analysis_check       : false,
+
+    // BUILD DOCKERFILE (disable — abhi Dockerfile nahi hai)
+    perform_build_dockerfile         : false,
+
+    // IMAGE SCANNING
+    image_scanning_check             : false,
+
+    // IMAGE SIZE VALIDATOR
+    image_size_validator_check       : false,
+
+    // PUBLISH ARTIFACT
+    artifact_publish_check           : false,
+
+    // NOTIFICATION (disable — webhook nahi hai)
+    notification_enabled             : false
+  ])
 }
