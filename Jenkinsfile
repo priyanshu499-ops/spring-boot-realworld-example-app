@@ -1,9 +1,7 @@
 @Library('ci-jenkins-shared-libraries@main') _
 def cipipeline = new opstree.ci.templates.java_ci.java_ci()
-
 node {
   cipipeline.call([
-
     // WORKSPACE MANAGEMENT
     clean_workspace                  : true,
     ignore_clean_workspace_failure   : false,
@@ -13,7 +11,6 @@ node {
     clean_when_not_built             : true,
     clean_when_build_succeed         : true,
     clean_when_build_unstable        : true,
-
     // VCS MANAGEMENT
     repo_https_url                   : "https://github.com/priyanshu499-ops/spring-boot-realworld-example-app.git",
     repo_ssh_url                     : "https://github.com/priyanshu499-ops/spring-boot-realworld-example-app.git",
@@ -21,7 +18,6 @@ node {
     repo_url_type                    : "http",
     jenkins_git_creds_id             : "github-token",
     source_code_path                 : "/spring-boot-realworld-example-app",
-
     // DEPENDENCY SCANNING
     dependency_check                          : false,
     dependency_scan_tool                      : "owasp",
@@ -29,13 +25,11 @@ node {
     owasp_report_publish                      : true,
     owasp_report_format                       : "html",
     fail_job_if_dependency_returned_exception : false,
-
     // CREDS SCANNING (GITLEAKS)
     gitleaks_check                   : true,
     fail_job_if_leak_detected        : false,
     gitleaks_report_format           : "json",
     gitleaks_report_jenkins_publish  : true,
-
     // BUILD ARTIFACT
     perform_code_build               : true,
     build_tool                       : "gradle",
@@ -46,30 +40,20 @@ node {
     codeartifact_domain              : "",
     codeartifact_owner               : "",
     pom_location                     : "",
-
-    // Unit Testing
-    unit_testing_check              : true,
-    fail_job_if_unit_issue_detected : false,
-    build_tool                      : "gradle",
-    unit_test_reports_path          : "**/build/test-results/test/*.xml",
-    java_version                    : "11",
-
-
-    // STATIC CODE ANALYSIS 
+    // UNIT TESTING
+    unit_testing_check               : true,
+    fail_job_if_unit_issue_detected  : false,
+    unit_test_reports_path           : "**/build/test-results/test/*.xml",
+    // STATIC CODE ANALYSIS
     static_code_analysis_check       : false,
-
-    // BUILD DOCKERFILE 
+    // BUILD DOCKERFILE
     perform_build_dockerfile         : false,
-
     // IMAGE SCANNING
     image_scanning_check             : false,
-
     // IMAGE SIZE VALIDATOR
     image_size_validator_check       : false,
-
     // PUBLISH ARTIFACT
     artifact_publish_check           : false,
-
     // NOTIFICATION
     notification_enabled             : false
   ])
