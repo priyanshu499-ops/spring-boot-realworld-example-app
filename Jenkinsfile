@@ -47,10 +47,13 @@ node {
     codeartifact_owner               : "",
     pom_location                     : "",
 
-    // UNIT TESTING
-    unit_testing_check               : true,
-    fail_job_if_unit_issue_detected  : false,
-    unit_test_reports_path           : "**/build/test-results/test/*.xml",
+    // Unit Testing
+    unit_testing_check              : true,
+    fail_job_if_unit_issue_detected : false,
+    build_tool                      : "gradle",
+    unit_test_reports_path          : "**/build/test-results/test/*.xml",
+    java_version                    : "11",
+
 
     // STATIC CODE ANALYSIS (disable karo agar sonar nahi hai)
     static_code_analysis_check       : false,
