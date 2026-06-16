@@ -48,6 +48,9 @@ node {
     static_code_analysis_check       : false,
     // BUILD DOCKERFILE
     perform_build_dockerfile         : true,
+    dockerfile_location              : '/Dockerfile',
+    dockerfile_context               : '',
+    image_name                       : 'spring-boot-realworld-app',
     // IMAGE SCANNING
     image_scanning_check             : true,
     // IMAGE SIZE VALIDATOR
