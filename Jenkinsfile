@@ -51,10 +51,15 @@ node {
     dockerfile_location              : '/Dockerfile',
     dockerfile_context               : '',
     image_name                       : 'spring-boot-realworld-app',
-    // IMAGE SCANNING
+    image_tag                        : 'latest',
+    // IMAGE SCANNING (TRIVY)
     image_scanning_check             : true,
+    scan_severity                    : 'HIGH,CRITICAL',
+    image_scanning_report_publish    : 'true',
     // IMAGE SIZE VALIDATOR
     image_size_validator_check       : true,
+    max_allowed_image_size           : '500',
+    fail_job_if_validation_fail      : 'false',
     // PUBLISH ARTIFACT
     artifact_publish_check           : false,
     // NOTIFICATION
