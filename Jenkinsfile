@@ -1,4 +1,4 @@
-@Library('ci-jenkins-shared-libraries') _
+@Library('ci-jenkins-shared-libraries@main') _
 
 pipeline {
     agent any
@@ -15,7 +15,7 @@ pipeline {
                         gradle_build_file_location  : 'build.gradle',
                         java_version                : '11'
                     ]
-                    build_factory(buildParams)
+                    build_artifact(buildParams)
                 }
             }
         }
