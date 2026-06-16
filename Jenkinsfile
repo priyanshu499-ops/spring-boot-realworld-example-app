@@ -19,7 +19,7 @@ node {
     jenkins_git_creds_id             : "github-token",
     source_code_path                 : "/spring-boot-realworld-example-app",
     // DEPENDENCY SCANNING
-    dependency_check                          : false,
+    dependency_check                          : true,
     dependency_scan_tool                      : "owasp",
     owasp_project_name                        : "spring-boot-gradle",
     owasp_report_publish                      : true,
@@ -47,11 +47,11 @@ node {
     // STATIC CODE ANALYSIS
     static_code_analysis_check       : false,
     // BUILD DOCKERFILE
-    perform_build_dockerfile         : false,
+    perform_build_dockerfile         : true,
     // IMAGE SCANNING
-    image_scanning_check             : false,
+    image_scanning_check             : true,
     // IMAGE SIZE VALIDATOR
-    image_size_validator_check       : false,
+    image_size_validator_check       : true,
     // PUBLISH ARTIFACT
     artifact_publish_check           : false,
     // NOTIFICATION
