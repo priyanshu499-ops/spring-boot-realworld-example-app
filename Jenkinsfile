@@ -4,6 +4,7 @@ def cipipeline = new opstree.ci.templates.java_ci.java_ci()
 node {
   cipipeline.call([
 
+    // WORKSPACE MANAGEMENT
     clean_workspace                  : true,
     ignore_clean_workspace_failure   : false,
     delete_dirs                      : false,
@@ -13,6 +14,7 @@ node {
     clean_when_build_succeed         : true,
     clean_when_build_unstable        : true,
 
+    // VCS MANAGEMENT
     repo_https_url                   : "https://github.com/priyanshu499-ops/spring-boot-realworld-example-app.git",
     repo_ssh_url                     : "https://github.com/priyanshu499-ops/spring-boot-realworld-example-app.git",
     repo_branch                      : "master",
@@ -20,13 +22,21 @@ node {
     jenkins_git_creds_id             : "github-token",
     source_code_path                 : "/spring-boot-realworld-example-app",
 
+    // DEPENDENCY SCANNING
+    dependency_check                          : false,
+    dependency_scan_tool                      : "owasp",
+    owasp_project_name                        : "spring-boot-gradle",
+    owasp_report_publish                      : true,
+    owasp_report_format                       : "html",
+    fail_job_if_dependency_returned_exception : false,
+
+    // CREDS SCANNING (GITLEAKS)
     gitleaks_check                   : true,
     fail_job_if_leak_detected        : false,
     gitleaks_report_format           : "json",
     gitleaks_report_jenkins_publish  : true,
 
-    dependency_check                 : false,
-
+    // BUILD ARTIFACT
     perform_code_build               : true,
     build_tool                       : "gradle",
     gradle_command                   : "build",
@@ -37,24 +47,30 @@ node {
     codeartifact_owner               : "",
     pom_location                     : "",
 
-    unit_testing_check               : false,
+    // Unit Testing
+    unit_testing_check              : true,
+    fail_job_if_unit_issue_detected : false,
+    build_tool                      : "gradle",
+    unit_test_reports_path          : "**/build/test-results/test/*.xml",
+    java_version                    : "11",
+
+
+    // STATIC CODE ANALYSIS 
     static_code_analysis_check       : false,
 
-    perform_build_dockerfile         : true,
-    image_name                       : "spring-boot-realworld",
-    dockerfile_location              : "/Dockerfile",
-    dockerfile_context               : " ",
+    // BUILD DOCKERFILE 
+    perform_build_dockerfile         : false,
 
+    // IMAGE SCANNING
     image_scanning_check             : false,
+
+    // IMAGE SIZE VALIDATOR
     image_size_validator_check       : false,
 
-    artifact_publish_check           : true,
-    artifact_destination_type        : "harbor",
-    docker_image_name                : "spring-boot-realworld",
-    harbor_url                       : "registry.hub.docker.com",
-    harbor_project                   : "priyanshu498",
-    harbor_credentials_id            : "docker-hub-creds",
+    // PUBLISH ARTIFACT
+    artifact_publish_check           : false,
 
+    // NOTIFICATION
     notification_enabled             : false
   ])
 }
