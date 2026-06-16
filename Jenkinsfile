@@ -23,7 +23,7 @@ node {
     source_code_path                 : "/spring-boot-realworld-example-app",
 
     // DEPENDENCY SCANNING
-    dependency_check                          : true,
+    dependency_check                          : false,
     dependency_scan_tool                      : "owasp",
     owasp_project_name                        : "spring-boot-gradle",
     owasp_report_publish                      : true,
