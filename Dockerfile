@@ -3,7 +3,7 @@ WORKDIR /app
 COPY . .
 RUN gradle build -x test
 
-FROM openjdk:11-jre-slim
+FROM eclipse-temurin:11-jre-jammy
 WORKDIR /app
 COPY --from=builder /app/build/libs/*.jar app.jar
 EXPOSE 8080
