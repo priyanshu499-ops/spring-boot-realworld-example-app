@@ -55,10 +55,10 @@ node {
     java_version                    : "11",
 
 
-    // STATIC CODE ANALYSIS (disable karo agar sonar nahi hai)
+    // STATIC CODE ANALYSIS 
     static_code_analysis_check       : false,
 
-    // BUILD DOCKERFILE (disable — abhi Dockerfile nahi hai)
+    // BUILD DOCKERFILE 
     perform_build_dockerfile         : false,
 
     // IMAGE SCANNING
@@ -70,7 +70,7 @@ node {
     // PUBLISH ARTIFACT
     artifact_publish_check           : false,
 
-    // NOTIFICATION (disable — webhook nahi hai)
+    // NOTIFICATION
     notification_enabled             : false
   ])
 }
