@@ -32,18 +32,18 @@ node {
     gitleaks_report_jenkins_publish  : true,
     // BUILD ARTIFACT
     perform_code_build               : true,
-    build_tool                       : "gradle",
-    gradle_command                   : "build",
-    gradle_build_file_location       : ".",
-    java_version                     : "11",
+    build_tool                       : 'gradle',   // single quotes = plain String, no GString issue
+    gradle_command                   : 'build',
+    gradle_build_file_location       : '.',
+    java_version                     : '11',       // single quotes = plain String
     codeartifact_dependency          : false,
-    codeartifact_domain              : "",
-    codeartifact_owner               : "",
-    pom_location                     : "",
+    codeartifact_domain              : '',
+    codeartifact_owner               : '',
+    pom_location                     : '',
     // UNIT TESTING
-    unit_testing_check               : true,
-    fail_job_if_unit_issue_detected  : false,
-    unit_test_reports_path           : "**/build/test-results/test/*.xml",
+    unit_testing_check               : 'true',     // must be String 'true', not boolean true
+    fail_job_if_unit_issue_detected  : 'false',    // must be String 'false', not boolean false
+    unit_test_reports_path           : '**/build/test-results/test/*.xml',
     // STATIC CODE ANALYSIS
     static_code_analysis_check       : false,
     // BUILD DOCKERFILE
