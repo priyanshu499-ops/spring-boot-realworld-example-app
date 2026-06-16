@@ -6,13 +6,25 @@ def vulnScanning  = new opstree.common.vulnerability_scanning()
 def sizeValidator = new opstree.common.image_size_validator()
 def unitTest      = new opstree.java.junit()
 
+def REPO_URL = 'https://github.com/priyanshu499-ops/spring-boot-realworld-example-app.git'
+
 node {
+
+    stage('Checkout') {
+        checkout([
+            $class: 'GitSCM',
+            branches: [[name: '*/master']],
+            userRemoteConfigs: [[url: REPO_URL]]
+        ])
+        sh "ls -la ${WORKSPACE}/spring-boot-realworld-example-app || echo 'direct workspace'"
+        sh "ls -la ${WORKSPACE}"
+    }
 
     stage('Build Artifact') {
         buildArtifact.build_factory([
             perform_code_build         : 'true',
             build_tool                 : 'gradle',
-            repo_url                   : 'https://github.com/priyanshu499-ops/spring-boot-realworld-example-app.git',
+            repo_url                   : REPO_URL,
             source_code_path           : '.',
             gradle_command             : 'build',
             gradle_build_file_location : '.',
@@ -29,7 +41,7 @@ node {
             unit_testing_check              : true,
             fail_job_if_unit_issue_detected : false,
             build_tool                      : 'gradle',
-            repo_url                        : 'https://github.com/priyanshu499-ops/spring-boot-realworld-example-app.git',
+            repo_url                        : REPO_URL,
             source_code_path                : '.'
         ])
     }
@@ -42,7 +54,7 @@ node {
             owasp_report_publish                      : true,
             owasp_report_format                       : 'html',
             fail_job_if_dependency_returned_exception : false,
-            repo_url                                  : 'https://github.com/priyanshu499-ops/spring-boot-realworld-example-app.git'
+            repo_url                                  : REPO_URL
         ])
     }
 
@@ -52,7 +64,7 @@ node {
             fail_job_if_leak_detected       : false,
             gitleaks_report_format          : 'json',
             gitleaks_report_jenkins_publish : true,
-            repo_url                        : 'https://github.com/priyanshu499-ops/spring-boot-realworld-example-app.git'
+            repo_url                        : REPO_URL
         ])
     }
 
@@ -62,7 +74,7 @@ node {
             fail_job_if_trivy_issue_detected : false,
             image_name                       : 'spring-boot-gradle',
             image_tag                        : 'latest',
-            repo_url                         : 'https://github.com/priyanshu499-ops/spring-boot-realworld-example-app.git'
+            repo_url                         : REPO_URL
         ])
     }
 
@@ -73,7 +85,7 @@ node {
             fail_job_if_validation_fail : false,
             image_name                  : 'spring-boot-gradle',
             image_tag                   : 'latest',
-            repo_url                    : 'https://github.com/priyanshu499-ops/spring-boot-realworld-example-app.git'
+            repo_url                    : REPO_URL
         ])
     }
 }
