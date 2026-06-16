@@ -1,4 +1,7 @@
-@Library('ci-jenkins-shared-libraries@feature/gradle-junit-support') _
+library identifier: 'ci-jenkins-shared-libraries@feature/gradle-junit-support', retriever: modernSCM(
+  [$class: 'GitSCMSource',
+   remote: 'https://github.com/ot-central-team/ci-jenkins-shared-libraries.git',
+   credentialsId: 'github-token'])
 def cipipeline = new opstree.ci.templates.java_ci.java_ci()
 node {
   cipipeline.call([
