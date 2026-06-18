@@ -14,7 +14,7 @@ node {
     // VCS MANAGEMENT
     repo_https_url                   : "https://github.com/priyanshu499-ops/spring-boot-realworld-example-app.git",
     repo_ssh_url                     : "https://github.com/priyanshu499-ops/spring-boot-realworld-example-app.git",
-    repo_branch                      : "master",
+    repo_branch                      : env.CHANGE_BRANCH ?: env.BRANCH_NAME ?: "dev",
     repo_url_type                    : "http",
     jenkins_git_creds_id             : "github-token",
     source_code_path                 : "/spring-boot-realworld-example-app",
@@ -32,17 +32,17 @@ node {
     gitleaks_report_jenkins_publish  : true,
     // BUILD ARTIFACT
     perform_code_build               : true,
-    build_tool                       : 'gradle',   // single quotes = plain String, no GString issue
+    build_tool                       : 'gradle',
     gradle_command                   : 'build',
     gradle_build_file_location       : '.',
-    java_version                     : '11',       // single quotes = plain String
+    java_version                     : '11',
     codeartifact_dependency          : false,
     codeartifact_domain              : '',
     codeartifact_owner               : '',
     pom_location                     : '',
     // UNIT TESTING
-    unit_testing_check               : 'true',     // must be String 'true', not boolean true
-    fail_job_if_unit_issue_detected  : 'false',    // must be String 'false', not boolean false
+    unit_testing_check               : 'true',
+    fail_job_if_unit_issue_detected  : 'false',
     unit_test_reports_path           : '**/build/test-results/test/*.xml',
     // STATIC CODE ANALYSIS
     static_code_analysis_check       : false,
