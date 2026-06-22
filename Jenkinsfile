@@ -19,12 +19,14 @@ node {
     jenkins_git_creds_id             : "github-token",
     source_code_path                 : "/spring-boot-realworld-example-app",
     // DEPENDENCY SCANNING
-    dependency_check                          : true,
-    dependency_scan_tool                      : "owasp",
-    owasp_project_name                        : "spring-boot-gradle",
-    owasp_report_publish                      : true,
-    owasp_report_format                       : "html",
-    fail_job_if_dependency_returned_exception : false,
+    // DEPENDENCY SCANNING
+    dependency_check                          : 'true',
+    dependency_scan_tool                      : 'owasp',
+    owasp_project_name                        : 'spring-boot-gradle',  
+    owasp_report_publish                      : 'true',
+    owasp_report_format                       : 'html',
+    fail_job_if_dependency_returned_exception : 'false',
+    nvd_api_key_creds_id                      : 'NVD_API_KEY',
     // CREDS SCANNING (GITLEAKS)
     gitleaks_check                   : true,
     fail_job_if_leak_detected        : false,
