@@ -1,4 +1,4 @@
-@Library('ci-jenkins-shared-libraries@feature/gradle-junit-support') _
+@Library('ci-jenkins-shared-libraries@main') _
 def cipipeline = new opstree.ci.templates.java_ci.java_ci()
 node {
   cipipeline.call([
