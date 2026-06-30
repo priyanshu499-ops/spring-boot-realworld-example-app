@@ -63,7 +63,10 @@ node {
     max_allowed_image_size           : '500',
     fail_job_if_validation_fail      : 'false',
     // PUBLISH ARTIFACT
-    artifact_publish_check           : false,
+    artifact_publish_check           : true,
+    artifact_destination_type        : 'dockerhub',
+    dockerhub_credentials_id         : 'dockerhub-creds',
+    dockerhub_username               : 'priyanshu498',
     // NOTIFICATION
     notification_enabled             : false
   ])
