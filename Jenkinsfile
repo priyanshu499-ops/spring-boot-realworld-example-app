@@ -33,7 +33,7 @@ node {
     gitleaks_report_jenkins_publish  : true,
     // BUILD ARTIFACT
     perform_code_build               : true,
-    build_tool                       : 'gradle',   // single quotes = plain String, no GString issue
+    build_tool                       : 'gradle',   
     gradle_command                   : 'build',
     gradle_build_file_location       : '.',
     java_version                     : '11',       // single quotes = plain String
