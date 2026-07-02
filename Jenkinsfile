@@ -53,7 +53,7 @@ node {
     dockerfile_context               : '',
     image_name                       : 'spring-boot-realworld-app',
     image_tag                        : 'latest',
-    // IMAGE SCANNING (TRIVY)
+    // IMAGE SCANNING  (TRIVY)
     image_scanning_check             : true,
     scan_severity                    : 'HIGH,CRITICAL',
     image_scanning_report_publish    : 'true',
