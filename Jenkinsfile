@@ -41,7 +41,7 @@ node {
     codeartifact_domain              : '',
     codeartifact_owner               : '',
     pom_location                     : '',
-    // UNIT TESTING
+    // UNIT test
     unit_testing_check               : 'true',     // must be String 'true', not boolean true
     fail_job_if_unit_issue_detected  : 'false',    // must be String 'false', not boolean false
     unit_test_reports_path           : '**/build/test-results/test/*.xml',
