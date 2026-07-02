@@ -11,7 +11,7 @@ node {
     clean_when_not_built             : true,
     clean_when_build_succeed         : true,
     clean_when_build_unstable        : true,
-    // VCS MANAGEMENT
+    //  VCS MANAGEMENT 
     repo_https_url                   : "https://github.com/priyanshu499-ops/spring-boot-realworld-example-app.git",
     repo_ssh_url                     : "https://github.com/priyanshu499-ops/spring-boot-realworld-example-app.git",
     repo_branch                      : "master",
